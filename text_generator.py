@@ -84,7 +84,7 @@ if __name__ == '__main__':
                 mode = int(input())
                 if mode not in [1, 2]:
                     raise Exception()
-                print("Введите размер генерируемого текста:")
+                print("Введите минимальный размер генерируемого текста:")
                 Model.sentence_size = int(input())
                 print("Введите количество генерируемых текстов:")
                 Model.sentences_size = int(input())
