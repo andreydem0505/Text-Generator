@@ -64,8 +64,38 @@ class Trigrams(Model):
 
 
 if __name__ == '__main__':
-    filename = input()
-    file = open(filename, "r", encoding="utf-8")
-    tokens = regexp_tokenize(file.read(), "\\S+")
-    model = Trigrams(tokens)
-    model.generate_text()
+    while True:
+        print("Введите путь к файлу-корпусу (txt, utf-8) или exit:")
+        filename = input()
+        if filename == 'exit':
+            break
+
+        try:
+            file = open(filename, "r", encoding="utf-8")
+        except FileNotFoundError:
+            print("Файл не найден!")
+            continue
+
+        tokens = regexp_tokenize(file.read(), "\\S+")
+
+        while True:
+            try:
+                print("Выберите режим (1, 2):")
+                mode = int(input())
+                if mode not in [1, 2]:
+                    raise Exception()
+                print("Введите размер генерируемого текста:")
+                Model.sentence_size = int(input())
+                print("Введите количество генерируемых текстов:")
+                Model.sentences_size = int(input())
+                break
+            except Exception:
+                print("Ошибка при вводе!")
+
+        if mode == 1:
+            model = Bigrams(tokens)
+        else:
+            model = Trigrams(tokens)
+
+        model.generate_text()
+        print()
